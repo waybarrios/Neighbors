@@ -1,0 +1,25 @@
+<%= form_for(@neighborhood) do |f| %>
+  <% if @neighborhood.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@neighborhood.errors.count, "error") %> prohibited this neighborhood from being saved:</h2>
+
+      <ul>
+      <% @neighborhood.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="small-12 small-centered medium-9 medium-centered large-9 large-centered columns">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="small-12 small-centered medium-9 medium-centered large-9 large-centered columns">
+    <%= f.label :city %><br />
+    <%= f.select :city_id, options_for_select(City.all.map {|city| [city.name, city.id]}) %>
+  </div>
+  <div class="actions">
+    <%= f.submit nil, class: "button radius medium-5 small-12 medium-push-3 columns success" %>
+  </div>
+<% end %>

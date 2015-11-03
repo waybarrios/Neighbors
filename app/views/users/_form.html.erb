@@ -1,0 +1,57 @@
+<%= form_for(@user) do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :birthday %><br />
+    <%= f.date_select :birthday %>
+  </div>
+ <div class="field">
+    <%= f.label :gender %><br />
+    <%= f.select :gender, options_for_select([["Masculino", "m"], ["Femenino", "f"]]) %>
+  </div>
+  <% if user_signed_in? %>
+    <% if current_user.type_user == 'admin' %>
+      <div class="field">
+        <%= f.label :type_user %><br />
+        <%= f.select :type_user, options_for_select([["Administrador", "admin"], ["Usuario", "user"]]) %>
+      </div>
+      <% else %>
+        <%= f.label :type_user %><br />
+        <%= f.select :type_user, options_for_select([["Usuario", "user"]]) %>
+    <% end %>
+  <% end %>
+  <div class="field">
+    <%= f.label :neighborhood %><br />
+    <%= f.select :neighborhood_id, options_for_select(Neighborhood.all.map {|neighborhood| [neighborhood.name, neighborhood.id]}
+) %>
+  </div>
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.text_field :email %>
+  </div>
+  <div class="field">
+    <%= f.label :username %><br />
+    <%= f.text_field :username %>
+  </div>
+  <div class="field">
+    <%= f.label :password %><br />
+    <%= f.text_field :password %>
+  </div>
+  <div class="actions">
+    <%= f.submit nil, class: "button radius medium-5 small-12 medium-push-3 columns success" %>
+  </div>
+<% end %>

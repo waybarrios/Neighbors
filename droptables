@@ -1,0 +1,10 @@
+ DROP TABLE public.alerts CASCADE;
+ DROP TABLE public.attendances CASCADE;
+ DROP TABLE public.cities CASCADE;
+ DROP TABLE public.comments CASCADE;
+ DROP TABLE public.countries CASCADE;
+ DROP TABLE public.events CASCADE;
+ DROP TABLE public.neighborhoods CASCADE;
+ DROP TABLE public.schema_migrations CASCADE;
+ DROP TABLE public.users CASCADE;
+

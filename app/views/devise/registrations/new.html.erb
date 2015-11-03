@@ -1,0 +1,54 @@
+<h1 class="small-12 small-centered medium-9 medium-centered large-9 large-centered columns">Sign up</h1>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div class="small-12 small-centered medium-9 medium-centered large-9 large-centered columns">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+    <div class="small-12 small-centered medium-9 medium-centered large-9 large-centered columns">
+    <%= f.label :birthday %><br />
+    <%= f.date_select :birthday %>
+  </div>
+ <div class="small-12 small-centered medium-9 medium-centered large-9 large-centered columns">
+    <%= f.label :gender %><br />
+    <%= f.select :gender, options_for_select([["Masculino", "m"], ["Femenino", "f"]]) %>
+  </div>
+   <% if user_signed_in? %>
+    <% if current_user.type_user == 'admin' %>
+      <div class="small-12 small-centered medium-9 medium-centered large-9 large-centered columns">
+        <%= f.label :type_user %><br />
+        <%= f.select :type_user, options_for_select([["Administrador", "admin"], ["Usuario", "user"]]) %>
+      </div>
+    <% end %>
+    <% else %>
+    <div class="small-12 small-centered medium-9 medium-centered large-9 large-centered columns">
+        
+        <%= f.hidden_field :type_user, :value => "user"%>
+  </div>
+  <% end %>
+   <div class="small-12 small-centered medium-9 medium-centered large-9 large-centered columns">
+    <%= f.label :neighborhood %><br />
+    <%= f.select :neighborhood_id, options_for_select(Neighborhood.all.map {|neighborhood| [neighborhood.name, neighborhood.id]}
+) %>
+  </div>
+
+   <div class="small-12 small-centered medium-9 medium-centered large-9 large-centered columns">
+    <%= f.label :username %><br />
+    <%= f.text_field :username %>
+  </div>
+
+  <div class="small-12 small-centered medium-9 medium-centered large-9 large-centered columns"><%= f.label :email %><br />
+  <%= f.email_field :email, autofocus: true %></div>
+
+  <div class="small-12 small-centered medium-9 medium-centered large-9 large-centered columns"><%= f.label :password %><br />
+    <%= f.password_field :password, autocomplete: "off" %></div>
+
+  <div class="small-12 small-centered medium-9 medium-centered large-9 large-centered columns"><%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "off" %></div>
+
+  <div ><%= f.submit "Sign up", class: "button small-12 small-centered medium-8 medium-centered large-8 large-centered columns push-2" %></div>
+<% end %>
+
+<%= render "devise/shared/links" %>

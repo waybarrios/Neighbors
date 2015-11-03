@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width = device-width, initial-scale=1.0" />
+
+  <title><%= content_for?(:title) ? yield(:title) : "Neighbors" %></title>
+
+  <%= stylesheet_link_tag "application" %>
+
+  <%= csrf_meta_tags %>
+
+</head>
+
+<body>
+ <nav class="top-bar navigation" data-topbar>
+       <ul class="title-area">
+         <li class="name"> 
+          <h1><%= link_to 'Neighbors', home_index_path%></h1>            
+        </li> 
+        <li class="toggle-topbar menu-icon">
+          <a href="#">Menu</a>
+        </li>
+      </ul> 
+      <section class="top-bar-section"> <!-- Left Nav Section --> 
+        <ul class="left"> 
+          <% if user_signed_in? %>
+          <% if current_user.type_user == 'admin' %>
+          <li>
+            <%= link_to 'Users', users_path %>
+          </li> 
+          <li>
+            <%= link_to 'Events', events_path %>
+
+          </li> 
+          <li>
+            <%= link_to 'Alerts', alerts_path %>
+          </li> 
+          <li>
+            <%= link_to 'Neighborhoods', neighborhoods_path %>
+          </li> 
+          <li>
+            <%= link_to 'Cities', cities_path %>
+          </li> 
+          <li>
+            <%= link_to 'Countries', countries_path %>
+          </li> 
+          <% else %>
+          <li>
+            <%= link_to 'My Events', events_path %>
+
+          </li> 
+          <li>
+            <%= link_to 'My Alerts', alerts_path %>
+          </li> 
+          <% end %>
+          <% end %>  
+
+        </ul> 
+
+
+        <!-- Right Nav Section -->
+        <ul class="right">
+          <li class="divider"></li>
+          <% if user_signed_in? %>
+          <li>
+            <%= link_to current_user.name, edit_user_registration_path %>
+          </li>
+          <li>
+            <%= link_to 'Log Out', destroy_user_session_path, method: :delete %>
+          </li>
+          <% else %>
+          <li class="has">
+            <%= link_to 'Sign Up', new_user_registration_path %>
+          </li>
+          <li>
+            <%= link_to 'Sign In', new_user_session_path %>
+          </li>
+          <% end %>
+        </ul>
+      </section> 
+    </nav>
+
+    <div class="row"> 
+      <div class="columns large-12 medium-12 small-12">
+        <%= yield %>
+      </div>        
+    </div>
+
+<%= javascript_include_tag "application" %>
+</body>
+</html>

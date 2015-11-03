@@ -1,0 +1,22 @@
+<h1 class="" >Listing countries</h1>
+
+
+<% @countries.each do |country| %>
+
+<ul class="vcard small-12 small-centered medium-9 medium-centered large-9 large-centered columns" > 
+    <li class="fn">
+      <h1 class=""><%= country.name %></h1>
+    </li>   
+    
+    <li class="email">
+      <span><%= link_to 'Show', country, class: "" %></span> <span><%= link_to 'Edit', edit_country_path(country), class: "" %></span> <span><%= link_to 'Destroy', country, class: "",method: :delete, data: { confirm: 'Are you sure?' } %></span> 
+    </li> 
+</ul>
+
+ 
+<% end %>
+
+
+<br />
+
+<%= link_to 'New Country', new_country_path, class: "button radius medium-5 small-12 medium-push-3 columns success" %>

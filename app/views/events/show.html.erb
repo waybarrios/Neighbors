@@ -1,0 +1,94 @@
+<div>
+  <p id="notice"><%= notice %></p>
+
+  <p>
+    <b>Title:</b>
+    <%= @event.title %>
+  </p>
+
+  <p>
+    <b>Description:</b>
+    <%= @event.description %>
+  </p>
+
+  <p>
+    <b>Date event:</b>
+    <%= @event.date_event %>
+  </p>
+
+  <p>
+    <b>Time event:</b>
+    <%= @event.time_event %>
+  </p>
+
+  <p>
+    <b>Place:</b>
+    <%= @event.place %>
+  </p>
+
+  <p>
+    <b>User:</b>
+    <%= @event.user.username %>
+  </p>
+
+  <p>
+    <b>Neighborhood:</b>
+    <%= @event.neighborhood.name %>
+  </p>
+</div>
+
+<% @comment = Comment.new %>
+<% $id_event = @event.id %>
+<% $id_user = current_user.id %>
+<%= form_for(@comment) do |f| %>
+  <% if @comment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
+
+      <ul>
+      <% @comment.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :Comment %><br />
+    <%= f.text_area :content %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+<% @comments = Comment.all%>
+<% @comments.each do |comment| %>
+  <% if @event.id == comment.event_id%>
+    <% id = comment.user_id %>
+    <% @user = User.find_by_id(id)%>
+    <div>
+      <p>
+        <b>Content:</b>
+        <%= comment.content %>
+      </p>
+
+      <p>
+        <b>User:</b>
+        <%= @user.username %>
+      </p>
+
+      <p>
+        <b>Event:</b>
+        <%= comment.event_id %>
+      </p>
+      </div>  
+  <% end %> 
+<% end %>
+
+
+
+
+
+<%= link_to 'Edit', edit_event_path(@event), class: "button tiny radius medium-5 small-5 small-push-7 medium-push-3 columns success" %> |
+<%= link_to 'Back', events_path %>

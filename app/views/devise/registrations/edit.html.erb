@@ -1,0 +1,52 @@
+<h2 class="small-12 small-centered medium-9 medium-centered large-9 large-centered columns">Edit <%= resource_name.to_s.humanize %></h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+<%= devise_error_messages! %>
+
+
+<div class="small-12 small-centered medium-9 medium-centered large-9 large-centered columns">
+	<%= f.label :name %><br />
+	<%= f.text_field :name %>
+</div>
+<div class="small-12 small-centered medium-9 medium-centered large-9 large-centered columns">
+	<%= f.label :birthday %><br />
+	<%= f.date_select :birthday %>
+</div>
+<div class="small-12 small-centered medium-9 medium-centered large-9 large-centered columns">
+	<%= f.label :neighborhood %><br />
+	<%= f.select :neighborhood_id, options_for_select(Neighborhood.all.map {|neighborhood| [neighborhood.name, neighborhood.id]}
+	) %>
+</div>
+<div class="small-12 small-centered medium-9 medium-centered large-9 large-centered columns">
+	<%= f.label :username %><br />
+	<%= f.text_field :username %>
+</div>
+<div class="small-12 small-centered medium-9 medium-centered large-9 large-centered columns">
+	<%= f.label :email %><br />
+	<%= f.email_field :email %>
+</div>
+<% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+<div class="small-12 small-centered medium-9 medium-centered large-9 large-centered columns">
+	Currently waiting confirmation for: <%= resource.unconfirmed_email %>
+</div>
+<% end %>
+<div class="small-12 small-centered medium-9 medium-centered large-9 large-centered columns">
+	<%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
+	<%= f.password_field :password, autocomplete: "off" %>
+</div>
+<div class="small-12 small-centered medium-9 medium-centered large-9 large-centered columns">
+	<%= f.label :password_confirmation %><br />
+	<%= f.password_field :password_confirmation, autocomplete: "off" %>
+</div>
+<div class="small-12 small-centered medium-9 medium-centered large-9 large-centered columns">
+	<%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+	<%= f.password_field :current_password, autocomplete: "off" %>
+</div>
+
+
+
+
+<div><%= f.submit "Update", class: "button small-12 small-centered medium-8 medium-centered large-8 large-centered columns push-2" %></div>
+<% end %>
+
+

@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Content:</b>
+  <%= @comment.content %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @comment.user.username %>
+</p>
+
+<p>
+  <b>Event:</b>
+  <%= @comment.event.title%>
+</p>
+
+
+<%= link_to 'Edit', edit_comment_path(@comment), class: "button tiny radius medium-5 small-5 small-push-7 medium-push-3 columns success" %> |
+<%= link_to 'Back', comments_path, class: "button tiny radius medium-5 small-5 small-push-7 medium-push-3 columns success" %>

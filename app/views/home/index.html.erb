@@ -1,0 +1,216 @@
+
+	<div class="columns large-3 medium-3 small-12">
+		<div id="myModal" class="reveal-modal" data-reveal>
+			<h2 >Create new event</h2>
+			<p >Fill all fields to create a new event</p>  
+			<a class="close-reveal-modal">&#215;</a>
+			<% @event = Event.new%>
+			<%= form_for(@event) do |f| %>
+			<% if @event.errors.any? %>
+			<div id="error_explanation">
+
+				<h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
+
+				<ul>
+					<% @event.errors.full_messages.each do |msg| %>
+					<li><%= msg %></li>
+					<% end %>
+				</ul>
+			</div>
+			<% end %>
+			<div class="field">
+				<%= f.label :title %><br />
+				<%= f.text_field :title,placeholder:"Title" %>
+			</div>
+			<div class="field">
+				<%= f.label :description %><br />
+				<%= f.text_area:description ,placeholder:"Description" %>
+			</div>
+			<div class="field">
+				<%= f.label :date_event %><br />
+				<%= f.date_select :date_event ,placeholder:"Date" %>
+			</div>
+			<div class="field">
+				<%= f.label :time_event %><br />
+				<%= f.time_select :time_event,placeholder:"Time" %>
+			</div>
+			<div class="field">
+				<%= f.label :place %><br />
+				<%= f.text_field :place, placeholder:"Place" %>
+			</div>
+
+			<div class="actions">
+				<%= f.submit 'New Event', class: "button small-12 small-centered medium-8 medium-centered large-8 large-centered columns push-2" %>
+			</div>
+			<% end %>
+
+		</div>
+
+		<div id="myModal2" class="reveal-modal" data-reveal>
+			<h2 >Create new alert</h2>
+			<p >Fill all fields to create a new alert</p>	 
+			<a class="close-reveal-modal">&#215;</a>
+
+			<% @alert = Alert.new%>
+			<%= form_for(@alert) do |f| %>
+			<% if @alert.errors.any? %>
+			<div data-alert class="alert-box alert round">
+
+				<h2><%= pluralize(@alert.errors.count, "error") %> prohibited this alert from being saved:</h2>
+
+				<ul>
+					<% @alert.errors.full_messages.each do |msg| %>
+					<li><%= msg %></li>
+					<% end %>
+				</ul>
+			</div>
+			<% end %>
+
+			<div class="field">
+				<%= f.label :description %><br />
+				<%= f.text_field :description %>
+			</div>
+
+			<div class="actions">
+				<%= f.submit 'New Alert' , class: "button small-12 small-centered medium-8 medium-centered large-8 large-centered columns push-2 "%>
+			</div>
+			<% end %>
+		</div>
+
+
+		<ul class="vcard columns large-12 medium-12 small-12" > 
+			<li class="fn ">
+				<h1 class="columns large-3 medium-12 small-12"><%= current_user.name%></h1>
+			</li> 
+			<li class="street-address columns large-12 medium-12 small-12">
+				$<%= current_user.username%>
+			</li> 
+			<li class="locality">
+				<span class="state columns large-12 medium-12 small-12">
+					<%= current_user.neighborhood.name%>
+				</span>, 
+				<span class="zip columns large-12 medium-12 small-12">
+					<%= current_user.neighborhood.city.name%>
+				</span>
+			</li> 			
+			<li class="email columns large-12 medium-12 small-12">
+				<a href="#">
+					<%= current_user.email%>
+				</a>
+			</li> 
+		</ul>
+
+
+		<div class= "row">
+			<div class="columns large-12 medium-12 small-12">
+				<!--<a href="#" data-reveal-id="myModal" class= "button small radius ">New Event</a>-->
+
+				<%= link_to 'New event', new_event_path,  class: "button small radius" %>
+			</div>
+			<div class="columns large-12 medium-12 small-12">
+				<!--<a href="#" data-reveal-id="myModal2" class= "button small radius ">New Alert</a>-->
+
+				<%= link_to 'New Alert', new_alert_path,  class: "button small radius" %>
+			</div>			
+		</div>
+		<div class= "row">
+
+		</div>
+	</div>
+	
+	<div class="columns large-6 medium-6 small-12" >
+		
+
+
+		<% if user_signed_in? %>
+		<% if current_user.type_user == 'user'%>
+
+	
+		<h1>Events </h1>
+
+		
+		<% @events = Event.where("neighborhood_id = #{current_user.neighborhood_id}") %>
+		<% @events.each do |event| %>
+		
+			<div class="panel callout radius">
+				
+				<div class="panel callout radius">
+					<h4><%= event.user.name %> <small>$<%= event.user.username%></small></h4>					
+				<blockquote><%= event.description %><cite>Title: <%= event.title %></cite></blockquote>	
+
+				<ul class="breadcrumbs"> 
+						<li>
+							<a href="#">Place: <%= event.place%></a>
+						</li> 
+						<li>
+							<a href="#">DateTime: <%= event.date_event %> <%= event.time_event.strftime("%H:%m:%S") %></a>
+						</li> 						
+					</ul>				
+
+				</div>
+				
+				
+				<div class="panel callout radius" >									
+					
+					<% @comments = Comment.where("event_id = #{event.id}")%>
+					<% @comments.each do |comment| %>
+					<div class="panel callout radius" >
+						<h5>$<%= comment.user.username %> say:  <small><%= comment.content %></small></h5>							    
+					</div>
+					 
+					<% end %>
+				</div>	
+					<% @comment = Comment.new %>
+					
+					<%= form_for(@comment) do |f| %>
+						<% if @comment.errors.any? %>
+							<div id="error_explanation">
+								<h2><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
+
+								<ul>
+									<% @comment.errors.full_messages.each do |msg| %>
+									<li><%= msg %></li>
+									<% end %>
+								</ul>
+							</div>						
+						<% end %>
+						
+						
+						<%= f.hidden_field :event_id, :value => event.id  %>
+				      <div class="row collapse">
+				        <div class="small-10 columns">
+				          
+				          <%= f.text_field :content, placeholder: current_user.username %>
+				        </div>
+				        <div class="small-2 columns">
+				          
+				          <%= f.submit "Comment", class: 'button postfix'%>
+				        </div>
+				      </div>					
+					<% end %>
+
+							
+			</div>
+
+		<% end %>	
+
+
+	</div>
+
+
+	<div class="columns large-3 medium-3 small-12">
+	<h1>Alerts</h1>
+		
+		<% @alerts = Alert.where("neighborhood_id = #{current_user.neighborhood_id}")%>
+		<% @alerts.each do |alert| %>
+		<div class="panel callout radius">
+			<blockquote><%= alert.description %><cite>$<%= alert.user.username %></cite></blockquote>		
+		</div>		
+		
+		<% end %>	
+
+	</div>
+		<% end %>
+	<% end %>
+
+

@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @city.name %>
+</p>
+
+<p>
+  <b>Country:</b>
+  <%= @city.country.name %>
+</p>
+
+
+<%= link_to 'Edit', edit_city_path(@city), class: "button tiny radius medium-5 small-5 small-push-7 medium-push-3 columns success" %> |

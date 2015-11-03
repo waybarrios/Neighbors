@@ -1,0 +1,37 @@
+<h1 class="small-12 medium-12 large-12">Listing alerts</h1>
+
+
+<% @alerts.each do |alert| %>
+  <% if user_signed_in? %>
+    <% if current_user.type_user == 'user' %>
+      <% if alert.user_id == current_user.id %>
+            <ul class="vcard small-12 small-centered medium-9 medium-centered large-9 large-centered columns" columns large-3 medium-3 small-12> 
+                <li class="fn">
+                  <h1 class=""><%= alert.description %></h1>
+                </li> 
+               
+                <li class="email">
+                  <span><%= link_to 'Show', alert, class: "" %></span> <span><%= link_to 'Edit', edit_alert_path(alert), class: "" %></span> <span><%= link_to 'Destroy', alert, class: "",method: :delete, data: { confirm: 'Are you sure?' } %></span> 
+                </li> 
+              </ul>
+        
+      <% end %>
+    <% else %> 
+      <ul class="vcard small-12 small-centered medium-9 medium-centered large-9 large-centered columns" columns large-3 medium-3 small-12> 
+                <li class="fn">
+                  <h1 class=""><%= alert.description %></h1>
+                </li> 
+               
+                <li class="email">
+                  <span><%= link_to 'Show', alert, class: "" %></span> <span><%= link_to 'Edit', edit_alert_path(alert), class: "" %></span> <span><%= link_to 'Destroy', alert, class: "",method: :delete, data: { confirm: 'Are you sure?' } %></span> 
+                </li> 
+              </ul>
+              
+    <% end %>
+  <% end %>  
+<% end %>
+
+
+<br />
+
+<%= link_to 'New Alert', new_alert_path, class: "button radius medium-5 small-12 medium-push-3 columns success" %>

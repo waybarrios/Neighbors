@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  title: MyString
+  description: MyString
+  date_event: 2014-04-18
+  time_event: 2014-04-18 19:56:55
+  place: MyString
+  user: 
+  neighborhood: 
+
+two:
+  title: MyString
+  description: MyString
+  date_event: 2014-04-18
+  time_event: 2014-04-18 19:56:55
+  place: MyString
+  user: 
+  neighborhood: 

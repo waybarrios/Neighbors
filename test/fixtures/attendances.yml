@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  attendance: MyString
+  user: 
+  event: 
+
+two:
+  attendance: MyString
+  user: 
+  event: 
